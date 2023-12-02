@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  python:
+    build: ..
+    command: streamlit run main.py
+    restart: always
+    volumes:
+      - ./:/backend
+    ports:
+      - '80:8501'
+    env_file:
+      - .env
