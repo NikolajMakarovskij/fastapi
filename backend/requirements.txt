@@ -1,4 +1,12 @@
-fastapi
+fastapi==0.104.1
 pydantic
 uvicorn
+pyjwt
+passlib[bcrypt]
+SQLAlchemy==2.0.23
+alembic
+psycopg2==2.9.9
+psycopg2-binary
+databases[postgresql]
+email-validator
 pytest

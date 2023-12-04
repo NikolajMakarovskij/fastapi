@@ -16,10 +16,12 @@ services:
     env_file:
       - .env
     depends_on:
-          - mongodb
+      - db
+      - mongodb
 
   mongodb:
     image: mongo:latest
+    restart: always
     env_file:
       - .env
     ports:
@@ -30,3 +32,14 @@ services:
       - "MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}"
     command:
       mongod --quiet --logpath /dev/null
+
+  db:
+    image: postgres:14
+    restart: always
+    env_file:
+      - ./.env
+    volumes:
+      - ./database/Init_db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
