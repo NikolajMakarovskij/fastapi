@@ -1,22 +1,15 @@
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from sqlalchemy.orm import Session
 
 from .CRUD import crud
 from .schemas import users as schemas
-from .database import SessionLocal, engine, Base
-
-Base.metadata.create_all(bind=engine)
-
-app = FastAPI()
+#from .database import SessionLocal, engine, Base
+from .middleware.middleware import app, db_session_middleware
 
 
 # Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+def get_db(request: Request):
+    return request.state.db
 
 
 @app.post("/users/", response_model=schemas.User)
@@ -28,9 +21,9 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 
 @app.get("/users/", response_model=list[schemas.User])
-async def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
-    await users
+    return users
 
 
 @app.get("/users/{user_id}", response_model=schemas.User)

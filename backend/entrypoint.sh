@@ -11,11 +11,11 @@ then
 fi
 echo "Выполняем миграции"
 alembic init migrations
-sleep 1
-echo "Добавляем таблицы в БД"
-alembic revision --autogenerate -m "Added required tables"
-sleep 1
-echo "Обновляем заголовки"
-alembic upgrade head
+#sleep 1
+#echo "Добавляем таблицы в БД"
+#alembic revision --autogenerate -m "Added required tables"
+#sleep 1
+#echo "Обновляем заголовки"
+#alembic upgrade head
 
 exec "$@"

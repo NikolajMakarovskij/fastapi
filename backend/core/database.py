@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 DB_USER = os.environ.get("POSTGRES_USER")
 DB_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
-DB_HOST = "backend-db-1" #os.environ.get("POSTGRES_HOST")
+DB_HOST = os.environ.get("POSTGRES_HOST")
 DB_NAME = os.environ.get("POSTGRES_DB")
 SQLALCHEMY_DATABASE_URL = (
     f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:5432/{DB_NAME}"
